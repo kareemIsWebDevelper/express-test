@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     <title>Post Details</title>
+</head>
+<body>
+     <header>
+        <%- include("./components/NavBar.ejs") %>
+    </header>
+     <main>
+          <h1>Details Page</h1>
+          <div class="bg-white w-25 mx-auto my-3 p-2">
+               <p>
+                    <span>Post Title:</span>
+                    -<%= post.title %>
+               </p>
+               <p>  
+                    <span>Post Content:</span>
+                    -<%= post.body %>
+               </p>
+               <p>
+                    <span>Post Author:</span>
+                    -<%= post.author %>
+                    <%= post._id %>
+               </p>
+               <br />
+               <a class="delete" data-doc="<%= post._id %>">Delete Post</a>
+          </div>
+     </main>
+     <footer>
+        <%- include("./components/Footer.ejs") %>
+     </footer>
+
+     <script>
+          const deleted = document.querySelector("a.delete");
+
+          deleted.addEventListener("click", (e) => {
+               const endPoint = '/${deleted.dataset.doc}';
+               fetch(endPoint, {
+                    method: "DELETE",
+               })
+               .then((response)=> {response.json()})
+               .then((data) => window.location.href = data.redirect)
+               .catch(err => console.log(error));
+          })
+     </script>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
